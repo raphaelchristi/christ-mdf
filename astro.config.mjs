@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://chrismdf.pages.dev',
+  site: 'https://chrismdf.com.br',
   output: 'static',
   integrations: [react(), sitemap()],
   vite: {
