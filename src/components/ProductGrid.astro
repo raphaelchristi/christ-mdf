@@ -1,0 +1,52 @@
+---
+import ProductCard from './ProductCard.astro';
+
+interface Product {
+  nome: string;
+  slug: string;
+  categoria: string;
+  preco: number;
+  descricao: string;
+  imagens: string[];
+}
+
+interface Props {
+  products: Product[];
+}
+
+const { products } = Astro.props;
+---
+
+<div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {products.map((product, index) => (
+    <ProductCard
+      nome={product.nome}
+      slug={product.slug}
+      categoria={product.categoria}
+      preco={product.preco}
+      descricao={product.descricao}
+      imagem={product.imagens[0]}
+      index={index}
+    />
+  ))}
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll<HTMLElement>('[data-category]');
+
+    document.addEventListener('category-filter', ((e: CustomEvent<{ category: string }>) => {
+      const { category } = e.detail;
+      cards.forEach(card => {
+        if (category === 'todas' || card.dataset.category === category) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }) as EventListener);
+  });
+</script>

@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Hero from '@/components/Hero.astro';
+import ProductCard from '@/components/ProductCard.astro';
+import SchemaOrg from '@/components/SchemaOrg.astro';
+import { siteConfig } from '@/config';
+import { buildWhatsAppUrl } from '@/lib/utils';
+
+const allProducts = await getCollection('produtos');
+const destaques = allProducts.filter(p => p.data.destaque).slice(0, 4);
+
+const whatsappUrl = buildWhatsAppUrl(siteConfig.whatsapp, 'Olá! Vi o site e gostaria de fazer um orçamento.');
+
+const categorias = [
+  { slug: 'mdf', label: 'MDF', desc: 'Chapas de MDF cru e melamínico em diversas espessuras' },
+  { slug: 'pinus', label: 'Pinus', desc: 'Tábuas, sarrafos e ripas de pinus aplainado' },
+  { slug: 'cortes', label: 'Cortes sob Medida', desc: 'Corte CNC com precisão milimétrica' },
+  { slug: 'acessorios', label: 'Acessórios', desc: 'Parafusos, colas, fitas de borda e mais' },
+];
+
+const diferenciais = [
+  { title: 'Corte sob Medida', desc: 'Cortamos suas chapas com precisão CNC nas medidas exatas do seu projeto.' },
+  { title: 'Atendimento Especializado', desc: 'Nossa equipe ajuda você a escolher o material ideal.' },
+  { title: 'Produtos de Qualidade', desc: 'Trabalhamos com as melhores marcas e fornecedores do mercado.' },
+  { title: 'Preços Competitivos', desc: 'Qualidade e preço justo para profissionais e entusiastas.' },
+];
+---
+
+<Base title="Início" description={siteConfig.description}>
+  <SchemaOrg type="LocalBusiness" />
+
+  <Hero />
+
+  <!-- Categorias -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark">Nossas Categorias</h2>
+      <p class="mt-3 text-dark-light/70 max-w-2xl mx-auto">Tudo para seus projetos em MDF e madeira</p>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {categorias.map((cat, i) => (
+        <a
+          href={`/catalogo?categoria=${cat.slug}`}
+          class="group bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition-all duration-300 animate-fade-in-up"
+          style={`animation-delay: ${i * 0.1}s;`}
+        >
+          <div class="w-14 h-14 bg-sage/10 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg class="w-7 h-7 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-lg font-semibold text-dark group-hover:text-sage-dark transition-colors">{cat.label}</h3>
+          <p class="mt-1 text-sm text-dark-light/60">{cat.desc}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Produtos em Destaque -->
+  <section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark">Destaques</h2>
+        <p class="mt-3 text-dark-light/70 max-w-2xl mx-auto">Os produtos mais procurados pelos nossos clientes</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {destaques.map((product, index) => (
+          <ProductCard
+            nome={product.data.nome}
+            slug={product.data.slug}
+            categoria={product.data.categoria}
+            preco={product.data.preco}
+            descricao={product.data.descricao}
+            imagem={product.data.imagens[0]}
+            index={index}
+          />
+        ))}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/catalogo" class="inline-flex items-center gap-2 text-sage font-medium hover:text-sage-dark transition-colors">
+          Ver todos os produtos
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diferenciais -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="text-center mb-12">
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark">Por que escolher a Christ MDF?</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {diferenciais.map((item, i) => (
+        <div
+          class="bg-white rounded-2xl p-6 shadow-sm text-center animate-fade-in-up"
+          style={`animation-delay: ${i * 0.1}s;`}
+        >
+          <div class="w-12 h-12 bg-sage/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="font-heading text-lg font-semibold text-dark">{item.title}</h3>
+          <p class="mt-2 text-sm text-dark-light/70">{item.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA WhatsApp -->
+  <section class="bg-sage py-16">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white">Precisa de um orçamento?</h2>
+      <p class="mt-4 text-white/80 text-lg">Fale conosco pelo WhatsApp e receba seu orçamento rapidamente. Atendemos profissionais e entusiastas!</p>
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-8 inline-flex items-center gap-2 bg-white text-sage-dark px-8 py-4 rounded-full font-semibold text-lg hover:bg-cream transition-colors"
+      >
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Solicitar Orçamento
+      </a>
+    </div>
+  </section>
+</Base>

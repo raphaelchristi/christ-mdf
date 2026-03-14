@@ -1,0 +1,50 @@
+---
+import { siteConfig } from '@/config';
+
+interface Props {
+  type: 'LocalBusiness' | 'Product';
+  product?: {
+    nome: string;
+    descricao: string;
+    preco: number;
+    imagem?: string;
+  };
+}
+
+const { type, product } = Astro.props;
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: siteConfig.name,
+  description: siteConfig.description,
+  telephone: `+${siteConfig.whatsapp}`,
+  email: siteConfig.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'São Paulo',
+    addressRegion: 'SP',
+    addressCountry: 'BR',
+  },
+  sameAs: [siteConfig.instagramUrl],
+};
+
+const productSchema = product ? {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: product.nome,
+  description: product.descricao,
+  offers: {
+    '@type': 'Offer',
+    price: product.preco,
+    priceCurrency: 'BRL',
+    availability: 'https://schema.org/InStock',
+  },
+} : null;
+
+const schema = type === 'LocalBusiness' ? localBusiness : productSchema;
+---
+
+{schema && (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+)}

@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import ProductGrid from '@/components/ProductGrid.astro';
+import CategoryFilter from '@/components/CategoryFilter.tsx';
+
+const allProducts = await getCollection('produtos');
+const sorted = allProducts
+  .map(p => p.data)
+  .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+---
+
+<Base title="Catálogo" description="Confira nosso catálogo completo de mesas, decorações, kits e balões para aluguel.">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-8">
+      <h1 class="font-heading text-3xl sm:text-4xl font-bold text-dark">Nosso Catálogo</h1>
+      <p class="mt-3 text-dark-light/70 max-w-2xl mx-auto">
+        Explore todas as opções disponíveis para aluguel. Clique em um produto para ver mais detalhes.
+      </p>
+    </div>
+
+    <CategoryFilter client:load />
+    <ProductGrid products={sorted} />
+  </section>
+</Base>
