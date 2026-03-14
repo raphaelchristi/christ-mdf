@@ -21,10 +21,11 @@ const { Content } = await render(product);
 const whatsappUrl = buildWhatsAppUrl(siteConfig.whatsapp, data.whatsapp_msg);
 
 const categoryLabels: Record<string, string> = {
-  'mdf': 'MDF',
-  'pinus': 'Pinus',
-  'cortes': 'Cortes sob Medida',
-  'acessorios': 'Acessórios',
+  'mesas': 'Mesas',
+  'paineis': 'Painéis',
+  'cenarios': 'Cenários',
+  'conjuntos': 'Conjuntos',
+  'pecas': 'Peças Decorativas',
 };
 ---
 
@@ -66,7 +67,9 @@ const categoryLabels: Record<string, string> = {
 
         <div class="mt-8 p-6 bg-white rounded-2xl shadow-sm">
           <div class="text-sm text-dark-light/60 mb-1">Preço</div>
-          <div class="text-4xl font-bold text-gold">{formatPrice(data.preco)}</div>
+          <div class="text-4xl font-bold text-gold">
+            {data.preco_sob_consulta ? 'Sob consulta' : formatPrice(data.preco)}
+          </div>
           <a
             href={whatsappUrl}
             target="_blank"

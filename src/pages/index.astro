@@ -13,17 +13,17 @@ const destaques = allProducts.filter(p => p.data.destaque).slice(0, 4);
 const whatsappUrl = buildWhatsAppUrl(siteConfig.whatsapp, 'Olá! Vi o site e gostaria de fazer um orçamento.');
 
 const categorias = [
-  { slug: 'mdf', label: 'MDF', desc: 'Chapas de MDF cru e melamínico em diversas espessuras' },
-  { slug: 'pinus', label: 'Pinus', desc: 'Tábuas, sarrafos e ripas de pinus aplainado' },
-  { slug: 'cortes', label: 'Cortes sob Medida', desc: 'Corte CNC com precisão milimétrica' },
-  { slug: 'acessorios', label: 'Acessórios', desc: 'Parafusos, colas, fitas de borda e mais' },
+  { slug: 'mesas', label: 'Mesas', desc: 'Mesas temáticas e decorativas em MDF' },
+  { slug: 'paineis', label: 'Painéis', desc: 'Painéis e backdrops para cenários' },
+  { slug: 'cenarios', label: 'Cenários', desc: 'Estruturas decorativas temáticas' },
+  { slug: 'conjuntos', label: 'Conjuntos', desc: 'Kits completos para sua festa' },
 ];
 
 const diferenciais = [
-  { title: 'Corte sob Medida', desc: 'Cortamos suas chapas com precisão CNC nas medidas exatas do seu projeto.' },
-  { title: 'Atendimento Especializado', desc: 'Nossa equipe ajuda você a escolher o material ideal.' },
-  { title: 'Produtos de Qualidade', desc: 'Trabalhamos com as melhores marcas e fornecedores do mercado.' },
-  { title: 'Preços Competitivos', desc: 'Qualidade e preço justo para profissionais e entusiastas.' },
+  { title: 'Fabricação Própria', desc: 'Produzimos todas as peças em nossa oficina com MDF e pinus de qualidade.' },
+  { title: 'Sob Medida', desc: 'Criamos peças personalizadas no tamanho e tema que você precisar.' },
+  { title: 'Acabamento Profissional', desc: 'Peças com corte CNC preciso, prontas para pintura ou uso.' },
+  { title: 'Preços Acessíveis', desc: 'Qualidade profissional com preços que cabem no seu bolso.' },
 ];
 ---
 
@@ -36,7 +36,7 @@ const diferenciais = [
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="text-center mb-12">
       <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark">Nossas Categorias</h2>
-      <p class="mt-3 text-dark-light/70 max-w-2xl mx-auto">Tudo para seus projetos em MDF e madeira</p>
+      <p class="mt-3 text-dark-light/70 max-w-2xl mx-auto">Peças em MDF e pinus para todos os tipos de festa e evento</p>
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {categorias.map((cat, i) => (
@@ -62,7 +62,7 @@ const diferenciais = [
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <h2 class="font-heading text-3xl sm:text-4xl font-bold text-dark">Destaques</h2>
-        <p class="mt-3 text-dark-light/70 max-w-2xl mx-auto">Os produtos mais procurados pelos nossos clientes</p>
+        <p class="mt-3 text-dark-light/70 max-w-2xl mx-auto">As peças mais procuradas pelos nossos clientes</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {destaques.map((product, index) => (
@@ -71,6 +71,7 @@ const diferenciais = [
             slug={product.data.slug}
             categoria={product.data.categoria}
             preco={product.data.preco}
+            preco_sob_consulta={product.data.preco_sob_consulta}
             descricao={product.data.descricao}
             imagem={product.data.imagens[0]}
             index={index}
@@ -114,8 +115,8 @@ const diferenciais = [
   <!-- CTA WhatsApp -->
   <section class="bg-sage py-16">
     <div class="max-w-3xl mx-auto px-4 text-center">
-      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white">Precisa de um orçamento?</h2>
-      <p class="mt-4 text-white/80 text-lg">Fale conosco pelo WhatsApp e receba seu orçamento rapidamente. Atendemos profissionais e entusiastas!</p>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white">Quer uma peça personalizada?</h2>
+      <p class="mt-4 text-white/80 text-lg">Fabricamos mesas, painéis e cenários sob medida. Fale conosco e receba seu orçamento!</p>
       <a
         href={whatsappUrl}
         target="_blank"

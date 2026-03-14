@@ -6,6 +6,7 @@ interface Product {
   slug: string;
   categoria: string;
   preco: number;
+  preco_sob_consulta?: boolean;
   descricao: string;
   imagens: string[];
 }
@@ -24,6 +25,7 @@ const { products } = Astro.props;
       slug={product.slug}
       categoria={product.categoria}
       preco={product.preco}
+      preco_sob_consulta={product.preco_sob_consulta}
       descricao={product.descricao}
       imagem={product.imagens[0]}
       index={index}

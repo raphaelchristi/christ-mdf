@@ -4,10 +4,11 @@ import { cn } from '@/lib/utils';
 
 const categories = [
   { value: 'todas', label: 'Todas' },
-  { value: 'mdf', label: 'MDF' },
-  { value: 'pinus', label: 'Pinus' },
-  { value: 'cortes', label: 'Cortes sob Medida' },
-  { value: 'acessorios', label: 'Acessórios' },
+  { value: 'mesas', label: 'Mesas' },
+  { value: 'paineis', label: 'Painéis' },
+  { value: 'cenarios', label: 'Cenários' },
+  { value: 'conjuntos', label: 'Conjuntos' },
+  { value: 'pecas', label: 'Peças Decorativas' },
 ];
 
 export default function CategoryFilter() {
